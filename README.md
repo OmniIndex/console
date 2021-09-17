@@ -28,3 +28,5 @@ Visit the [Google Cloud Marketplace](https://cloud.google.com/marketplace) and s
 If your OmniIndex Platform Instance is available on a public IP address or running on the OmniIndex Cloud \
 you can also use the OmniIndex SaaS console located at \
 [OmniIndex Management Console](https://saas.omnianalytics.live)
+Or with docker \
+- docker pull gcr.io/omniindex-oidx-dev/github.com/omniindex/console:6792ae5
