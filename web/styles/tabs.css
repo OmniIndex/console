@@ -1,0 +1,269 @@
+#quickLinksBar {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    height: 100%;
+    width: 100%;
+    background-color: #ebeef3;
+    overflow: auto;   
+    padding: 10px;    
+}
+
+#dashboardTab {
+    display: none;
+    flex-direction: column;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    background-color:#003d52;
+    animation: fade-animation-example ease 10s;
+    -webkit-transition: opacity 2s ease-in;
+    -moz-transition: opacity 2s ease-in;
+    -ms-transition: opacity 2s ease-in;
+    -o-transition: opacity 2s ease-in;
+    transition: opacity 2s ease-in;
+    overflow: auto;    
+}
+
+#resultsContainer {
+    display: none;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    background-color:white;;
+    animation: fade-animation-example ease 10s;
+    -webkit-transition: opacity 2s ease-in;
+    -moz-transition: opacity 2s ease-in;
+    -ms-transition: opacity 2s ease-in;
+    -o-transition: opacity 2s ease-in;
+    transition: opacity 2s ease-in;
+    overflow: auto;
+}
+
+#sqlEditorContainer {
+    display: none;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    flex-flow: column;
+    animation: fade-animation-example ease 10s;
+    -webkit-transition: opacity 2s ease-in;
+    -moz-transition: opacity 2s ease-in;
+    -ms-transition: opacity 2s ease-in;
+    -o-transition: opacity 2s ease-in;
+    transition: opacity 2s ease-in;
+}
+
+#userManagementTab {
+    display: none;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    flex-flow: column;
+    background-color:blanchedalmond;
+    animation: fade-animation-example ease 10s;
+    -webkit-transition: opacity 2s ease-in;
+    -moz-transition: opacity 2s ease-in;
+    -ms-transition: opacity 2s ease-in;
+    -o-transition: opacity 2s ease-in;
+    transition: opacity 2s ease-in;
+    overflow: auto;    
+}
+
+#historyTab {
+    display: none;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    flex-flow: column;
+    background-color:blanchedalmond;
+    overflow: auto;    
+}
+
+
+.tab:hover {
+    text-decoration: underline;
+    background-color: #787777;
+}
+
+.selected {
+    background-color: #007396;
+    color: black;
+}
+
+.tabmenubar {
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    height: 22px;
+    background-color: #e0e9f0;
+    font-size: 0.8rem;
+    padding-top: 4px;
+    padding-left: 5px;
+}
+
+.tabmenubar div img {
+    height: 18px;
+    width: auto;
+    vertical-align: middle;
+}
+
+
+.tabmenubar .spacer {
+    border-right: 0.1rem solid #979393;
+}
+
+.tabmenubar .button {
+    padding-left: 6px;
+    padding-right: 6px;
+    width: 36px;
+    text-align: center;
+}
+
+.tabmenubar .button:hover {
+    background-color: #979393;
+}
+
+
+.serverNicknameDiv {
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+/** Quick links tabbed page */
+
+.quickLinkHeader {
+    width: 100%;
+    border-bottom: 1px solid #ebeef3;
+    padding-left: 6px;
+}
+
+.topQuickLink {
+    width: 100%;
+    height: 20%;
+    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-right: 10px;
+    background-color: White;
+    padding: 6px;
+}
+
+
+.welcomeHeader {
+    display: flex;
+    flex-direction: row;
+}
+.welcomeHeader div {
+    padding: 10px;
+}
+
+.welcomeHeader img {
+    display: inline-block;
+    vertical-align: middle;
+    height: 120px;
+    width: auto;
+}
+
+.welcomeSplashTop {
+    font-size: 1.75rem;
+    font-weight: 800;
+    padding-left: 8px;
+    color: #003e51;
+}
+
+.welcomeSplashLevel2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    padding-left: 8px;
+    color: #003e51; 
+    line-height: 4px;  
+}
+
+.welcomeOverview {
+    width: 100%;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.bottomSplash {
+    width: 100%;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #787777;
+    margin-top: 7px;
+}
+
+.bottomSplash span {
+    padding: 7px;
+    border-right: 1px solid #ebeef3;
+}
+
+.bottomSplash .last {
+    border-right: 0px solid transparent;
+}
+
+.serversQuickLink {
+    width: 100%;
+    height: 20%;
+    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-right: 10px;
+    background-color: White;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+}
+
+.serverItems {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.serverLink {
+    text-align: center;
+    width: 50%;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.serverLink img {
+    vertical-align: middle;
+    height: 64px;
+    width: auto;
+}
+.helpQuickLink {
+    width: 100%;
+    height: 20%;
+    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-right: 10px;
+    background-color: White;
+    padding: 6px;
+}
+/** History **/
+#historyItems {
+    display: flex;
+    opacity: 1;
+    height: 100%;
+    width: 100%;
+    flex-flow: column;
+    background-color:blanchedalmond;
+    overflow: auto;    
+}
+
+.historyitem {
+    display: flex;
+    width: 100%;
+    flex-flow: row;   
+}
+
+.historyitem div {
+    flex: 1;
+    font-size: 0.7rem;
+    color: navy;
+}

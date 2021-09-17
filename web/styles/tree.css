@@ -1,0 +1,46 @@
+ul, #serverList {
+    list-style-type: none;
+    font-size: 0.8rem;
+  }
+  
+  /* Remove margins and padding from the parent ul */
+  #serverList {
+    margin: 0;
+    padding: 0;
+  }
+
+  .nickname {
+    color: #003e51;
+    font-weight: 900;
+  }
+  
+  .caret {
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari 3.1+ */
+    -moz-user-select: none; /* Firefox 2+ */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none;
+  }
+  
+  .caret::before {
+    content: "\25B6";
+    color: black;
+    display: inline-block;
+    margin-right: 6px;
+  }
+  
+  .caret-down::before {
+    transform: rotate(90deg);  
+  }
+  
+  .nested {
+    display: none;
+  }
+  
+  .active {
+    display: block;
+  }
+
+  .title {
+      font-weight: 700;
+  }

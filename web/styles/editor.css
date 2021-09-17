@@ -1,0 +1,105 @@
+
+.queryeditor {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-size: 0.9rem;   
+    color: blue; 
+    outline: 0px solid transparent;
+    background-color: antiquewhite;
+}
+
+/** File Dialog **/
+#fileDialog {
+    position: absolute;
+    display: none;
+    flex-flow: column;
+    top: 15%;
+    left: 27%;
+    max-width: 55%;
+    max-height: 35%;
+    min-width: 55%;
+    min-height: 35%;border: 1px solid black; 
+    background-color: White;
+} 
+
+#fileDialog .header {
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    height: 22px;
+    background-color: #e0e9f0;
+    font-size: 1rem;
+    color: #007396;
+    border-bottom: 1px solid black;
+}
+
+#fileDialog .close {
+    margin-left: auto;
+    margin-right: 7px;
+}
+
+#fileDialog .close:after{
+    content: "\00d7"; /* This will render the 'X' */
+}
+
+#dialogFileListing {
+    display: flex;
+    flex-flow: column;
+    font-size: 1rem;
+    overflow: auto;
+    background-color: White;
+    overflow: auto;
+}
+
+.row {
+    display: flex;
+    flex-flow: row;
+    font-size: 1rem;
+    overflow: auto;
+    background-color: White; 
+    cursor: pointer;   
+}
+
+.row:hover {
+    background-color: #f0e5ae;
+}
+
+.row .item {
+    font-size: 0.9rem;
+    color: #003e51;
+    margin-left: 5px;
+}
+
+.row img {
+    vertical-align: middle;
+    height: 18px;
+    width: auto;
+}
+.row .date {
+    margin-left: auto;
+    margin-right: 7px;   
+}
+
+.dialogButtons {
+    margin-top: auto;
+    border-top: 1px solid black;
+    padding: 4px; 
+    background-color: #e0e9f0;
+}
+
+.dialogButtons input {
+    width: 65%;
+    margin-right: 75px;
+}
+
+.dialogButtons button{
+    width: 75px;
+    margin-right: 10px;
+}
+
+.darktheme {
+    background-color: Black;
+    color: white;
+    font-size: 11pt
+}

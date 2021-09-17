@@ -1,0 +1,131 @@
+#localLogin {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    opacity: 1;
+    justify-content: left; 
+    align-content: center;
+    flex-flow: row;
+    height: 100vh;
+    width: 100vw;
+    background-color: #497f9b;
+    animation: fade-animation-example ease 10s;
+    -webkit-transition: opacity 2s ease-in;
+    -moz-transition: opacity 2s ease-in;
+    -ms-transition: opacity 2s ease-in;
+    -o-transition: opacity 2s ease-in;
+    transition: opacity 2s ease-in;
+    background-image: url('../images/front_scanner.png');
+    background-repeat: no-repeat;
+    background-size: fill;
+}
+
+.leftlocallogin {
+    display: flex;
+    justify-content: center; 
+    align-content: center;
+    flex-flow: column;
+    width: 65%;
+    height: 100%;
+}
+
+.leftlocallogin img {
+    vertical-align: middle;
+    width: 100%;
+    height: auto;
+}
+
+.leftLowerImages {
+    width: 100%;
+    text-align: center;
+}
+
+.leftLowerImages img {
+    height: 128px;
+    width: auto;
+    padding: 25px;
+}
+
+.rightlocallogin {
+    display: flex;
+    justify-content: center; 
+    align-content: center;
+    flex-flow: column;
+    width: 35%;
+    height: 100%;
+}
+
+.rightlocallogin input {
+    width: 75%;
+    margin: 10px;
+}
+
+
+.rightlocallogin button {
+    width: 35.5%;
+    margin: 10px;
+    background-color: #009dda;
+}
+
+#localPasswordUpdate {
+    display: none;
+    position: absolute;
+    top: 26px;
+    left: 35%;
+    justify-content: center; 
+    align-content: center;
+    flex-flow: column;
+    width: 30%;
+    height: 175px; 
+    background-color: #9c9b9b; 
+    border: 1px dashed silver;  
+}
+
+#localPasswordUpdate div {
+    width: 95%;
+    font-weight: 900;
+    text-align: center;
+}
+
+#localPasswordUpdate input {
+    width: 75%;
+    margin: 10px;
+}
+
+#localPasswordUpdate button {
+    width: 35.5%;
+    margin: 10px;
+    background-color: #009dda;
+}
+
+#newLocalUser {
+    display: none;
+    position: absolute;
+    top: 26px;
+    left: 35%;
+    justify-content: center; 
+    align-content: center;
+    flex-flow: column;
+    width: 30%;
+    height: 175px; 
+    background-color: #9c9b9b; 
+    border: 1px dashed silver;  
+}
+
+#newLocalUser div {
+    width: 95%;
+    font-weight: 900;
+    text-align: center;
+}
+
+#newLocalUser input {
+    width: 75%;
+    margin: 10px;
+}
+
+#newLocalUser button {
+    width: 35.5%;
+    margin: 10px;
+    background-color: #009dda;
+} 

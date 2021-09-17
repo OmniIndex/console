@@ -1,0 +1,57 @@
+.dataloads {
+    display: flex;
+    flex-direction: row;
+    opacity: 1;
+    height: 30%;
+    width: 100%;
+    padding: 0px;
+    background-color:#003d52;
+    overflow: auto; 
+}
+
+#currentLoad {
+    margin-top: 25px;
+    min-width: 50%;
+    height: 100%;
+    background-color: #003d52;
+    overflow: auto;
+    align-content: center;
+    align-items: center;
+}
+
+#topTenIP {
+    margin-top: 25px;
+    min-width: 50%;
+    height: 100%;
+    background-color: #003d52;
+    align-content: center;
+    align-items: center;
+}
+
+#PiiData {
+    min-width: 100%;
+    height: 40%;
+    border-top: 5px solid #007396;
+    background-color: #003d52;
+    overflow: auto;
+    align-content: center;
+    align-items: center;
+}
+
+#dashboard {
+    width: 100%;
+    height: 90%;
+    padding: 10px;
+    font-size: 0.9rem;   
+    color: blue; 
+    outline: 0px solid transparent;
+}
+
+#sentimentData {
+    display: flex;
+    flex-grow:1;
+    border-top: 5px solid #007396;
+    width: 100%;
+    align-content: center;
+    align-items: center;
+}

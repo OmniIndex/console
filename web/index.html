@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>OmniIndex - Management Dashboard</title>
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;400;600;700&display=swap" rel="stylesheet">
+        <link href='styles/page.css' rel='stylesheet'>
+        <link href='styles/login.css' rel='stylesheet'>
+        <link href='styles/waitingcursor.css' rel='stylesheet'>
+        <link href='styles/contextmenu.css' rel='stylesheet'>
+        <link href='styles/server.css' rel='stylesheet'>
+        <link href='styles/tree.css' rel='stylesheet'>
+        <link href='styles/resultsdisplay.css' rel='stylesheet'>
+        <link href='styles/tabs.css' rel='stylesheet'>
+        <link href='styles/editor.css' rel='stylesheet'>
+        <link href='styles/dashboard.css' rel='stylesheet'>
+        <link href='styles/users.css' rel='stylesheet'>
+    </head>
+    <body>
+        <!-- We will start with the main page area. All other popups, layers and menus will be at the bottom of this file, 
+        they will be followed by the script includes-->
+        <div id='page'>
+            <div class='toolbar'>
+                <div class='toptoolbar' id='topToolbar'>
+                    <div class='logo'><span style='color: #009dda;'>O</span>mni<span style='color: #009dda;'>I</span>ndex</div>
+                    <div class='toolbarmenu' id='menuBarFile'>File</div>
+                    <div class='toolbarmenu' id='menuBarEdit'>Edit</div>
+                    <div class='toolbarmenu' id='menuBarReports'>Reports</div>
+                    <div class='toolbarmenu' id='menuBarHelp'>Help</div>
+                    <div class='toolbarmenu userdetails' id='userDetails'><img src='images/exitwhite.png' alt='Exit image'/>Unasigned</div>
+                </div>
+                <div class='bottomtoolbar'>
+                    <div class='header'>
+                        <div class='menubaritem'>Browser</div>
+                        <div class='h_image'><img id='addDataSourceDiv' src='images/adddatasource.png' alt='Add Datasource' title ='Add OmniIndex Platform Server'/></div>
+                    </div>
+                    <div class='menubaritem tab selected' id='showHome'>Home</div>
+                    <div class='menubaritem tab' id='showDashboard'>Dashboard</div>
+                    <div class='menubaritem tab' id='showSQLEditor'>SQL</div>
+                    <div class='menubaritem tab' id='showDataSet'>Results</div>
+                    <div class='menubaritem tab' id='usersData'>Users</div>
+                    <div class='menubaritem tab' id='historyData'>History</div>
+                </div>
+            </div>
+            <!-- End tool bars -->
+            <!-- Display Area -->
+            <div class='contentarea'>
+                <div id='leftContent'>
+                    <img id='connectedServers' src='images/data.png' alt='Connected Servers'/><span></span>
+                </div>
+                <div id='rightContent'>
+                    <div id='quickLinksBar' class='tabbedArea'>
+                        <div class='topQuickLink'>
+                            <div class='quickLinkHeader'>Welcome</div>
+                            <div class='welcomeHeader'>
+                                <div><img src='images/logoball.png' alt='OmniIndex Logo'></div>
+                                <div>
+                                    <div class='welcomeSplashTop'>oidxAdmin</div>
+                                    <div class='welcomeSplashLevel2'>Administration Tool for the OmniIndex Platform</div>
+                                </div>
+                            </div>
+                            <div class='welcomeOverview'>oidxAdmin is an Open Source feature rich Administration &amp; Data Science tool for the OmniINdex Platform. Updates can be found at the OmniIndex GitHub Repository. Or on your cloud marketplace.</div>
+                            <div class='bottomSplash'><span>User management</span><span>Database management</span><span class='last'>Data Science Query Testing</span></div>
+                        </div>
+                        <div class='serversQuickLink'>
+                            <div class='quickLinkHeader'>Servers Quicklinks</div>
+                            <div class='serverItems'>
+                                <div class='serverLink' id='quicklinkAddServer'>
+                                    <img src='images/adddatasource.png' alt='Add Data Source'/>
+                                    <p>Add an OmniIndex Platform Server</p>
+                                </div>
+                                <div class='serverLink' id='quickLinkUsers'>
+                                    <img src='images/user.png' alt='Manage Users'/>
+                                    <p title='manage Users' id='manageUsersLink'>No server Chosen</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='helpQuickLink'>
+                            <div class='quickLinkHeader'>oidxAdmin Help</div>
+                            <div class='serverItems'>
+                                <div class='serverLink' id='quickLinkGuide'>
+                                    <img src='images/guide.png' alt='getting Started'/>
+                                    <p>Getting Started</p>
+                                </div>
+                                <div class='serverLink' id='quickLinksOidxWeb'>
+                                    <img src='images/website.png' alt='Visit OmniIndex'/>
+                                    <p title='Visit OmniIndex'>OmniIndex Web Site</p>
+                                </div>
+                                <div class='serverLink'>
+                                    <img src='images/videos.png' alt='OmniIndex Help Videos' id='quickLinksVimeo'/>
+                                    <p title='Video tutorials'>Video Tutorials</p>
+                                </div>
+                                <div class='serverLink'>
+                                    <img src='images/github.png' alt='OmniIndex GitHub' id='quickLinksGit'/>
+                                    <p title='OmniIndex Github'>OmniIndex @GitHub</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- the next items are all hidden by default We will start with the dashboard -->
+                    <div id='dashboardTab' class='tabbedArea'>
+                        <div class='tabmenubar'>
+                            <div id='reloadDashboard' class='button' title='Reload'><img src='images/reload.png' alt='Reload'/></div>
+                            <div id='pauseDashboard' class='button' title='Pause'><img id='pauseDashboardImage' src='images/pause.png' alt='pause'/></div>
+                            <div class='spacer'></div>
+                            <div class='serverNicknameDiv'></div>
+                        </div>
+                        <div id='dashboard'>
+                            <div class='dataloads'>
+                                <div id='currentLoad'></div>
+                                <div id='topTenIP'></div>
+                            </div>
+                            <div id='PiiData'></div>
+                            <div id='sentimentData'></div>
+                        </div>
+                    </div>
+                    <!-- Then the table -->
+                    <div id='resultsContainer' class='tabbedArea'>
+                        <div class='tabmenubar'>
+                            <div id='saveResultsButton' class='button' title='Save Query'><img src='images/save.png' alt='Save Query'/></div>
+                            <div id='openResultsButton' class='button' title='Open Query'><img src='images/open.png' alt='Open Query'/></div>
+                            <div class='spacer'></div>
+                            <div id='exportResultsButton' class='button' title='Save results to a CSV file'><img src='images/export.png' alt='Export results'/></div>
+                            <div class='spacer'></div>
+                            <div class='serverNicknameDiv'></div>
+                        </div>
+                        <div id='resultsTableDiv'>--- No results to display ---</div>
+                    </div>
+                    <!-- The SQL Editor -->
+                    <div id='sqlEditorContainer' class='tabbedArea'>
+                        <div class='tabmenubar'>
+                            <div id='runSqlButton' class='button' title='Run Query'><img src='images/run.png' alt='Run Query'/></div>
+                            <div class='spacer'></div>
+                            <div id='saveSqlButton' class='button' title='Save Query'><img src='images/save.png' alt='Save Query'/></div>
+                            <div id='openSqlButton' class='button' title='Open Query'><img src='images/open.png' alt='Open Query'/></div>
+                            <div class='spacer'></div>
+                            <div class='serverNicknameDiv'></div>
+                        </div>
+                        <div contenteditable="true" id='editor' class='queryeditor'>--- No SQL Query is currently being run ---</div>
+                    </div>
+                    <!-- User bits -->   
+                    <div id='userManagementTab' class='tabbedArea'>
+                        <div class='tabmenubar'>
+                            <div class='serverNicknameDiv'></div>
+                        </div>
+                        <div id='addUser'>
+                            <div class='usertabdetails usersleft'>
+                                <img src='images/adduserlarge.png' alt='Add a new user'/>
+                                Use this form to add a new user to your domain. A user must have the same domain email address to be added to your system.
+                                For example if your username is 'me@thisdomain.com' then the new user must also have a username of '&lt;somone&gt;@thisdomain.com'</somone>
+                                <p>
+                                    This will then add the user to your domain and give them access to this portal. You do not need to add a user to add their data to the system.
+                                    Data can be added with any of our aggregators, just make sure that the group name is specified as your domain email.
+                                </p>
+                            </div>
+                            <div class='usertabdetails'>
+                                <div>
+                                    <p>OmniIndex Admin</p>
+                                    <p>Add New User</p>
+                                    <input name='newEmail' id='newEmail' placeholder='Email Address'/>
+                                    <input type='password' name='newPassword' id='newPassword' placeholder='Password'/> 
+                                    <button class='login' id='createUserButton'>Add New User</button> 
+                                 </div>
+                            </div>
+                        </div>
+                        <div id='suspendUser'>
+                            <div class='usertabdetails usersleft'>
+                                <img src='images/pauseuser.png' alt='Add a new user'/>
+                                Use this form to suspend a users access to the system.
+                                <p>
+                                    This will not stop the indexing of their data, but will stop them accessing reports and searching the data.
+                                </p>
+                            </div>
+                            <div class='usertabdetails'>
+                                <div>
+                                    <p>OmniIndex Admin</p>
+                                    <p>Suspend User</p>
+                                    <input name='pauseEmail' id='pauseEmail' placeholder='Email Address'/>
+                                    <button class='login' id='suspendUserButton'>Suspend User</button> 
+                                 </div>
+                            </div>
+                        </div>
+                        <div id='reinstateUser'>
+                            <div class='usertabdetails usersleft'>
+                                <img src='images/reinstateuser.png' alt='Add a new user'/>
+                                Use this form to reinstate a users access to the system.
+                                <p>
+                                    This will give the user access to reporting.
+                                </p>
+                            </div>
+                            <div class='usertabdetails'>
+                                <div>
+                                    <p>OmniIndex Admin</p>
+                                    <p>Reinstate User</p>
+                                    <input name='pauseEmail' id='reinstateEmail' placeholder='Email Address'/>
+                                    <button class='login' id='reinstateUserButon'>Reinstate User</button> 
+                                 </div>
+                            </div>
+                        </div> 
+                        <div id='deleteUser'>
+                            <div class='usertabdetails usersleft'>
+                                <img src='images/removeuser.png' alt='Add a new user'/>
+                                Use this form to permanently remove a user from the system.
+                                <p>
+                                    This will not stop the indexing of their data, but will permanently stop them accessing reports and searching the data.
+                                </p>
+                                <p>
+                                    To stop a user indexing data, you will need to
+                                    <ul>
+                                        <li>Remove any aggregators they have running on their device/s</li>
+                                        <li>Or. Modify the aggregator configuration file on their device/s to stop indexing</li>
+                                    </ul>
+                                </p>
+                            </div>
+                            <div class='usertabdetails'>
+                                <div>
+                                    <p>OmniIndex Admin</p>
+                                    <p>Suspend User</p>
+                                    <input name='pauseEmail' id='deleteEmail' placeholder='Email Address'/>
+                                    <button class='login' id='dropUserButton'>Delete User</button> 
+                                 </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div id='historyTab' class='tabbedArea'>
+                    <div class='tabmenubar'>
+                        <div class='spacer'></div>
+                        <div class='serverNicknameDiv'></div>
+                    </div>
+                    <div id='history'>
+                        <div id='historyItems'></div>
+                </div>
+            </div>
+        </div>
+        <!-- Here we will have the various pages that are called by the user. Such as a create connection and creat user (local - login)-->
+        <div id='localLogin'>
+            <div class='leftlocallogin'>
+            </div>
+            <div class='rightlocallogin'>
+                <div><input type='text' id='localusername' placeholder='Username' value=''/></div>
+                <div><input type='password' id='localpassword' placeholder='Password' value=''/></div>
+                <div>
+                    <button id='localLoginButton'>Login</button>
+                    <button id='localAccountButton'>Create Account</button>
+                </div>
+            </div>
+        </div>
+        <!-- Local Password Update -->
+        <div id='localPasswordUpdate'>
+            <div>Please type in your new password</div>
+            <div><input type='password' id='newPassword1' placeholder='New Password'/></div>
+            <div><input type='password' id='newPassword2' placeholder='Verify Password'/></div>
+            <div>
+                <button id='updatePasswordButton'>OK</button>
+                <button id='cancePasswordUpdateButton'>Cancel</button>
+            </div>
+        </div>
+        <!-- New Local User -->
+        <div id='newLocalUser'>
+            <div>Please type in your User detail</div>
+            <div><input type='text' id='newUserName' placeholder='username'/></div>
+            <div><input type='password' id='newuserPassword1' placeholder='Password'/></div>
+            <div><input type='password' id='newUserPassword2' placeholder='Verify Password'/></div>
+            <div>
+                <button id='createNewUserButton'>OK</button>
+                <button id='cancelNewUserButton'>Cancel</button>
+            </div>
+        </div>
+        <!-- New Server Connection -->
+        <div id='newServerConnection'>
+            <div>Please type in your User detail</div>
+            <div><input type='text' id='serverUsername' placeholder='username'/></div>
+            <div><input type='password' id='serverPassword' placeholder='Password'/></div>
+            <div><input type='text' id='serverAddress' placeholder='URL'/></div>
+            <div><input type='text' id='serverNickname' placeholder='Nickname'/></div>
+            <div>
+                <button id='createServerConnectionButton'>OK</button>
+                <button id='cancelServerConnectionButton'>Cancel</button>
+            </div>
+        </div>                     
+        <!-- menus -->
+        <!-- Menu Bar -->
+        <div id='menuBarFileMenu' class='context-menu'
+        style="display:none">
+            <ul>
+                <li id='menuOpenSqlEditor'><img src='images/sql.png' alt='Open SQL Editor'/><a href="#"  title='Open SQL Editor'>Open SQL Editor</a></li>
+                <li id='menuOpenDashboard'><img src='images/dashboard.png' alt='View Dashboard'/><a href="#"  title='View Dashboard'>View Dashboard</a></li>
+                <li><div></div></li>
+                <li id='menuBarLogout'><img src='images/exit.png' alt='Logout'/><a href="#"  title='Logout'>Logout</a></li>
+            </ul>
+        </div>
+        <div id='menuBarEditMenu' class='context-menu'
+        style="display:none">
+            <ul>
+                <li id='menuEditorDark'><img src='images/sql.png' alt='Dark theme'/><a href="#"  title='Toggle SQL Editor Dark Theme'>Toggle SQL Editor Dark Them</a></li>
+                <li id='menuManageUsers'><img src='images/user.png' alt='Manage Users'/><a href="#"  title='Manage Users'>Manage Users</a></li>
+            </ul>
+        </div>
+        <div id='menuBarReportsMenu' class='context-menu'
+        style="display:none">
+            <ul>
+                <li id='menuReportsWDC'><img src='images/tableau.png' alt='Tableau'/><a href="#"  title='Open the OmniIndex Tableau WDC Repo'>Tableau Web Data Connectors</a></li>
+                <li id='menuReportsDS'><img src='images/datastudio.png' alt='Google Data Studio'/><a href="#"  title='Open the OmniIndex Google Data Studio Repo'>Google Data Studio Projects</a></li>
+            </ul>
+        </div>
+        <div id='menuBarHelpMenu' class='context-menu'
+        style="display:none">
+            <ul>
+                <li id='menuHelpAbout'><img src='images/about.png' alt='About'/><a href="#"  title='About oidxAdmin'>About</a></li>
+            </ul>
+        </div>
+        <!-- Local User menu -->
+        <div id="contextMenuLocalUser" class="context-menu" 
+        style="display:none">
+            <ul>
+                <li id='localLogout'><img src='images/exit.png' alt='Logout'/><a href="#"  title='Logout'>Logout</a></li>
+                <li id='changePassword'><img src='images/password.png' alt='Change Password'/><a href="#"  title='Change Password'>Change Password</a></li>
+            </ul>
+        </div>
+        <!-- Server Context -->
+        <div id="contextMenuServer" class="context-menu" 
+        style="display:none">
+            <ul>
+                <li id='removeServerContext'><img src='images/removedata.png' alt='Remove Server'/><a href="#"  title='remove Server'>Remove Server</a></li>
+            </ul>
+        </div>
+        <!-- Table context menu -->
+        <div id="contextMenuTable" class="context-menu" 
+        style="display:none">
+            <ul>
+                <li onclick='getTop100()'><img src='images/data.png' alt='Display top 100 records'/><a href="#"  title='Show top 100 records'>Show top 100 records</a></li>
+                <li><div></div></li>
+                <li onclick='exportToCSV(this)'><img src='images/export.png' alt='Export data'/><a href="#"  title='Export data to CSV'>Export to CSV</a></li>
+            </ul>
+        </div>
+        <!-- results table when a record has a contentId -->
+        <div id="contextMenuRecord" class="context-menu" 
+        style="display:none">
+            <ul>
+                <li onclick='showEmotions()'><img src='images/emotion.png' alt='Show emotion'/><a href="#"  title='Show emotion'>Emotion</a></li>
+                <li onclick='showContext()'><img src='images/context.png' alt='Show context'/><a href="#"  title='Show context'>Context</a></li>
+                <li onclick='showBCCData()'><img src='images/blank.png' alt='Display BCC List'/><a href="#"  title='Display BCC list'>BCCs'</a></li>
+                <li onclick='showPIIData()'><img src='images/piibreach.png' alt='Display PII Breaches'/><a href="#"  title='Display PII Breaches'>PII Breaches</a></li>
+            </ul>
+        </div>
+        <!-- File Save/open dialog -- Saves/opens to/from the browsers IndexdDB store -->
+        <div id='fileDialog'>
+            <div class='header' id='fileDialogHeader'>
+                <div id='dialogTitle'>OmniIndex File Dialog</div>
+                <div id='closeFileDialog' class='close' title='Close'></div>
+            </div>
+            <div id='dialogFileListing'>
+
+            </div>
+            <div class="dialogButtons"><input type='text' id='dialogFilename' placeholder='Filename'/><button id='dialogOkButton'>Save</button><button id='dialogCancelButton'>Cancel</button></div>
+        </div>
+        <!-- this is a task bar like thingie. -->
+        <div id='notifications'>
+            <div class='header'>
+                <div>Notifications</div>
+                <div id='notifyCaret' class='right notifycaret'></div>
+            </div>
+            <div id='notificationItems'></div>
+        </div>
+        <!-- Waiting Cursor -->
+        <div id='waitingHolder'><div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+        <!-- About Page -->
+        <div class='aboutOverlay' id='aboutOverlay'>
+            <div class='aboutClose'><a href="#" class="aboutclosebutton" id="aboutClose"></a></div>
+            <div class='aboutbox'>
+                <div class='aboutcontent'>
+                    <div>
+                        <img src='images/OmniIndexDark.png' alt='OmniIndex Logo'/>
+                        <div class='aboutSplashTop'>oidxAdmin</div>
+                    </div>
+                    <div class='right'>
+                        <div>&copy; OmniIndex Inc 2021 All rights reserved</div>
+                        <div>Apache License Version 2.0, January 2004</div>
+                    </div>
+                </div>
+                <div class='freedom'>You are free to make copies in whole or in part of any of this code. But, please respect us as the license holder.
+                    <div>OmniIndex Inc, its; affiliates or partners cannot be held liable for improper use of the code that makes up this application.</div>
+                    <div>OmniIndex Inc, its; affiliates or partners cannot be held liable for improper use of this application.</div>
+                </div>
+                <div class='aboutbuttonbar'><button id='aboutCloseButton'>OK</button></div>
+            </div>
+        </div>
+        <!-- Scripts -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="scripts/jquery.csv.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript" src="scripts/console.js"></script> 
+    </body>
+</html>    
