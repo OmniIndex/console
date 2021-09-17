@@ -1,14 +1,15 @@
 ![OmniIndex Logo](web/images/OmniIndexDark.png)
 # OmniIndex Platform, Management Console Web App
 The project consists of\
-*  .html files\
-*  .css Stylesheet files\
-*  .js Javascript files\
-All files held in the following folder structure\
-- /\
-- styles/\
-- images/\
-- scripts/\
+*  .html files
+*  .css Stylesheet files
+*  .js Javascript files
+*  .png image files
+All files are held in the following folder structure\
+- /
+- styles/
+- images/
+- scripts/
 \
 With the top level folder (/) holding the index.html file\
 The styles folder holding all of the css files\
