@@ -15,7 +15,7 @@ The styles folder holding all of the css files\
 The images folder holding the png files\
 And the scripts folder holding the javascript.\
 \
-##Building\
+Building\
 Clone this repo to your local system\
     git clone https://github.com/OmniIndex/console\
 then\
