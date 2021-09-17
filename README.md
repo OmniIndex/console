@@ -24,4 +24,7 @@ $docker build . -t oidxconsole:v1 \
 $docker run -dit oidxconsole:v1 \
 \
 Alternatively you can run this application within your own Google Cloud Project \
-Visit the [Google Cloud Marketplace](https://cloud.google.com/marketplace) and search for OmniIndex
+Visit the [Google Cloud Marketplace](https://cloud.google.com/marketplace) and search for OmniIndex \
+If your OmniIndex Platform Instance is available on a public IP address or running on the OmniIndex Cloud \
+you can also use the OmniIndex SaaS console located at \
+[OmniIndex Management Console](https://saas.omnianalytics.live)
