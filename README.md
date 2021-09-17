@@ -1,10 +1,24 @@
-# This is the OmniIndex Platform Management Console Web App
+![OmniIndex Logo](web/images/OmniIndexDark.png)
+# OmniIndex Platform Management Console Web App
 The project consists of
-#.html
-#.css
-#js
-files held in the following directory format
-# index.html
-# styles/*.css
-# images/*.png
-# scripts/*.js
+*.html files
+*.css Stylesheet files
+*.js Javascript files
+All files held in the following folder structure
+*/
+*styles/
+*images/
+*scripts/
+#
+######With the top level folder (/) holding the index.html file
+######The styles folder holding all of teh css files
+######The images folder holding the png files
+######And the scripts folder holding the javascript.
+#
+##Building
+####Clone this repo to your local system
+    git clone https://github.com/OmniIndex/console
+####then
+####$cd console
+####$docker build . -t oidxconsole:v1 
+####$docker run -dit oidxconsole:v1
