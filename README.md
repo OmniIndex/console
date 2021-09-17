@@ -21,4 +21,7 @@ Clone this repo to your local system\
 then\
 $cd console \
 $docker build . -t oidxconsole:v1 \
-$docker run -dit oidxconsole:v1
+$docker run -dit oidxconsole:v1 \
+\
+Alternatively you can run this application within your own Google Cloud Project \
+Visit the [Google Cloud Marketplace](https://cloud.google.com/marketplace) and search for OmniIndex
