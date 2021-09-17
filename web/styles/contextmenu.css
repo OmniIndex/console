@@ -1,0 +1,55 @@
+.context-menu {
+    position: absolute;
+    text-align: left;
+    background:white;
+    box-shadow: 3px 5px #f5f0f0;
+    z-index: 10;
+}
+
+.context-menu ul {
+    padding: 3px;
+    margin: 3px;
+    min-width: 150px;
+    list-style: none;
+}
+
+.context-menu ul li {
+    padding-bottom: 4px;
+    padding-top: 4px;
+    margin-bottom: 1px solid silver;
+    font-size: 0.65rem;
+}
+
+.context-menu ul li img {
+    vertical-align: middle;
+    height: 18px;
+    width: auto;
+    margin-right: 15px;
+}
+
+.context-menu ul li a {
+    text-decoration: none;
+    color: black;
+}
+
+.context-menu ul li div {
+    text-decoration: none;
+    color: black;
+    min-width: 100%;
+    border-bottom: 0.5px solid Silver;
+}
+
+.context-menu ul li:hover {
+    background: #f5f0f0;
+    text-decoration: underline;
+}
+
+.context-menu ul li .disabled {
+    color: dimgrey;
+}
+
+.context-menu ul li .disabled:hover {
+    color: dimgrey;
+    background: transparent;
+    text-decoration: none;
+}

@@ -1,0 +1,70 @@
+#addUser {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    border-bottom: 3px solid #e0e0df;
+
+}
+
+#suspendUser {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    border-bottom: 3px solid #e0e0df;
+
+}
+
+#reinstateUser {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    border-bottom: 3px solid #e0e0df;
+}
+
+#deleteUser {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+
+.usertabdetails {
+    font-weight: 700;
+    color: navy;
+    text-align: left; 
+    padding: 10px;
+}
+
+.usersleft {
+    width: 300px;
+    margin-right: 50px;
+}
+
+.usertabdetails {
+    flex-grow: 1;
+}
+
+.usertabdetails p {
+    word-wrap: normal;
+}
+
+
+.usertabdetails img {
+    width: 64px;
+    height: auto;
+}
+
+.usertabdetails input {
+    display: Block;
+    width: 252px;
+    margin-bottom: 6px;
+}
+
+.usertabdetails button {
+    width: 250px;
+    background-color: #009dda;
+}
+
+.usertabdetails div {
+    margin-top: 25px;
+}
+
