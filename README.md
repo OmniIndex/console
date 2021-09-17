@@ -17,8 +17,8 @@ And the scripts folder holding the javascript.\
 \
 Building\
 Clone this repo to your local system\
-    git clone https://github.com/OmniIndex/console\
+    git clone https://github.com/OmniIndex/console \
 then\
-$cd console\
+$cd console \
 $docker build . -t oidxconsole:v1 \
 $docker run -dit oidxconsole:v1\
