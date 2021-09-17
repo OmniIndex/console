@@ -1,5 +1,5 @@
 ![OmniIndex Logo](web/images/OmniIndexDark.png)
-# OmniIndex Platform Management Console Web App
+# OmniIndex Platform, Management Console Web App
 The project consists of\
   .html files\
   .css Stylesheet files\
