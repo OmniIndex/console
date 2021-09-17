@@ -21,4 +21,4 @@ Clone this repo to your local system\
 then\
 $cd console \
 $docker build . -t oidxconsole:v1 \
-$docker run -dit oidxconsole:v1\
+$docker run -dit oidxconsole:v1
