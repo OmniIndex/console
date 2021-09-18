@@ -127,7 +127,7 @@ document.getElementById("createNewUserButton").addEventListener("click", functio
 async function createLocalUser() {
     let newUser = { username: document.getElementById('newUserName').value, password: document.getElementById('newuserPassword1').value, host: "localhost", nickname: "local", date: getCurrentDate() };
     if ( UserObjs == null ) {
-        await openLocalUserDatabase();
+        await openLocalUserDatabase();//open the database or create it, if it does not exists
     }
     UserObjs.push ( newUser );
     let completed = await update(UserObjs);
