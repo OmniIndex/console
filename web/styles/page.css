@@ -142,6 +142,7 @@ body {
 /** Notifications **/
 #notifications {
     display: flex;
+    opacity: 0;
     flex-flow: column;
     position: absolute;
     width: 35vw;

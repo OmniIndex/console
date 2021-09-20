@@ -60,6 +60,18 @@ function removeNotification(position) {
     }
 }
 
+function clearAllNotifications() {
+    let nodes = document.getElementById("notificationItems").childNodes;
+    nodes.forEach(async function(node) {
+        node.remove();
+    });
+
+    nodes = document.getElementById("historyItems").childNodes;
+    nodes.forEach(async function(node) {
+        node.remove();
+    });   
+}
+
 /** History Tab */
 document.getElementById("historyData").addEventListener("click", function(event) {
     hideTabs();

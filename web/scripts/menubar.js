@@ -102,11 +102,13 @@ document.getElementById("menuBarLogout").addEventListener("click", function(even
     hideTabs();
     toggleTabBackground();
     clearUI();
+    document.getElementById("localLogin").style.display = "flex";
     document.getElementById("localLogin").style.opacity = "1";
     document.getElementById("page").style.opacity = "0";
-    document.getElementById("localLogin").style.display = "flex";
     document.getElementById("page").style.display = "none";
-    document.getElementById("userDetails").innerText = User;
+    document.getElementById("notifications").style.opacity = "0";
+    document.getElementById("userDetails").innerText = "";
+
 });
 
 document.getElementById("menuEditorDark").addEventListener("click", function(event) {

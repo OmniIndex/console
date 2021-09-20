@@ -78,6 +78,7 @@ async function localLogin() {
             document.getElementById('localpassword').value = "";
             document.getElementById('localusername').value = "";
             document.getElementById("userDetails").innerText = usr;
+            document.getElementById("notifications").style.opacity = "1";
             notification = setNotification("User " + User + " has loogged in.");
             getServerList();
             completed = true;

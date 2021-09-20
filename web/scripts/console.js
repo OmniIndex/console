@@ -198,6 +198,7 @@ function GetJsonValue( json,  key) {
 function clearUI() {
     hideTabs();
     toggleTabBackground();
+    clearAllNotifications();
     document.getElementById("newEmail").value = "";
     document.getElementById("newPassword").value = "";
     document.getElementById("pauseEmail").value = "";
