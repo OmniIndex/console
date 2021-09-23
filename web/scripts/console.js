@@ -88,13 +88,11 @@ document.getElementById("quickLinksGit").addEventListener("click", function(even
 
 /** This is the page load handler. Place all items that must be loaded at the very start in here */
 window.onload = function() {
-    //var req =  window.indexedDB.deleteDatabase("oidx_ussr");
-    //req.onsuccess = function() {
-    //    console.log("Database opened successfully");
-    //};
-    //req.onerror = (event) => {
-    //    console.log(event.target.errorCode);
-    //}
+    if (!window.indexedDB) {
+        console.log("Your browser doesn't support a stable version of IndexedDB. To use the OmniIndex Console you will have to swich to a more upto date browser.");
+        return;
+    }
+    
 
     //Load the other javascript files required. This means that 
     //we only have to include this one within the html

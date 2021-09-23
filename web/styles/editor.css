@@ -82,20 +82,31 @@
 }
 
 .dialogButtons {
+    display: flex;
+    flex-flow: row;
     margin-top: auto;
     border-top: 1px solid black;
     padding: 4px; 
     background-color: #e0e9f0;
 }
 
-.dialogButtons input {
+.dialogButtons .buttonsleft {
     width: 65%;
-    margin-right: 75px;
 }
 
-.dialogButtons button{
+.dialogButtons .buttonsleft input {
+    width: 90%;
+}
+
+
+.dialogButtons .buttonsright {
+    margin-left: auto;
+}
+
+.dialogButtons .buttonsright button{
     width: 75px;
     margin-right: 10px;
+    margin-left: 10px;
 }
 
 .darktheme {

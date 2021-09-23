@@ -162,19 +162,19 @@
 .welcomeHeader img {
     display: inline-block;
     vertical-align: middle;
-    height: 120px;
+    height: 80px;
     width: auto;
 }
 
 .welcomeSplashTop {
-    font-size: 1.75rem;
+    font-size: 1.55rem;
     font-weight: 800;
     padding-left: 8px;
     color: #003e51;
 }
 
 .welcomeSplashLevel2 {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-weight: 800;
     padding-left: 8px;
     color: #003e51; 
@@ -190,7 +190,7 @@
 .bottomSplash {
     width: 100%;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1.0rem;
     color: #787777;
     margin-top: 7px;
 }
@@ -222,6 +222,7 @@
     align-items: center;
     justify-content: center;
     padding-top: 20px;
+    font-size: 0.75rem;
 }
 
 .serverLink {
