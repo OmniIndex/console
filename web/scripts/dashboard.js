@@ -428,8 +428,6 @@ async function getGeoData() {
             //Now add these to the data
             data.addRow([cleanRow[1] + " " + cleanRow[2] + ", " + cleanRow[3], cleanRow[0] + ' Sessions', '#' + genRanHex(6)]);
       });
-      
-      //AIzaSyBmCgJIthkT7rifOQTsFGxObl3rBnQeLEI
       var url = 'https://icons.iconarchive.com/icons/icons-land/vista-map-markers/48/';
       var options = {
         zoomLevel: 6,
