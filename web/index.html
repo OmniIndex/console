@@ -113,8 +113,14 @@
                                 <div id='currentLoad'></div>
                                 <div id='topTenIP'></div>
                             </div>
-                            <div id='PiiData'></div>
-                            <div id='sentimentData'></div>
+                            <div id='secondRow'>
+                                <div class='column'><span class='secondrowheading'>Number of Active Sessions</span><div id='currentAccess'></div></div>
+                                <div class='column'><span class='secondrowheading'>User % of Sessions</span><div id='mostActiveUsers' style='width: 100%; height: 80%;'></div></div>
+                                <div class='column'><span class='secondrowheading'>Key</span><div id='keys' style='width: 100%; height: 100%; overflow: auto;'></div></div>
+                            </div>
+                            <div id='thirdRow'>
+                                <span class='secondrowheading'>Active Sessions per City</span><div id='geoData' style='height: 100%; width: 100%'></div>
+                            </div>
                         </div>
                     </div>
                     <!-- Then the table -->

@@ -31,9 +31,17 @@ google.charts.load('current', {'packages':['gauge']});
 google.charts.load('current', {'packages':['timeline']});
 google.charts.load('current', {'packages':['bar']});
 google.charts.load('current', {'packages':['corechart']});
+google.charts.load('current', {'packages':['map'], 'mapsApiKey': 'AIzaSyCbrVb7DJ8BCEiQE4KKm28JM3F0m15ryjA'});
 
+function addStyle(styleString) {
+  const style = document.createElement('style');
+  style.textContent = styleString;
+  document.head.append(style);
+}
 
+const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
 
+const COLORS = ['red', 'orange', 'blue', 'purple', 'yellow'];
 var RunActiveSessions = false;
 
 document.getElementById("pauseDashboard").addEventListener("click", function(event) {
@@ -88,8 +96,9 @@ document.getElementById("showDashboard").addEventListener("click", function(even
 async function getActiveSessions() {
     RunActiveSessions = true;
     getBusyHours();
-    getPIIBreaches();
-    getSentiment();
+    currentActiveSessions();
+    mostActiveUsers();
+    getGeoData();
     let query = "SELECT COUNT(to_char(session_date, 'MI')) AS active, to_char(session_date, 'HH24:MI') AS session_date FROM sessiont WHERE session_date BETWEEN NOW() - INTERVAL '5 MINS' AND NOW() GROUP BY session_date ORDER BY session_date ASC";
     while ( RunActiveSessions ) {
     let serverMap = await getServerDetails();
@@ -169,6 +178,7 @@ async function getActiveSessions() {
 
       chart.draw(data, options); 
       await sleep ( 1000 );
+      RunActiveSessions = false;
     }
 }
 
@@ -252,15 +262,70 @@ async function getBusyHours() {
       };
       var data = google.visualization.arrayToDataTable(graph_array);
       var chart = new google.visualization.LineChart(document.getElementById('topTenIP'));
-
       chart.draw(data, options); 
       await sleep ( 300000 );
     }
   }
 }
 
-async function getPIIBreaches() {
-  let query = "SELECT COUNT(to_char(modified_date, 'HH24:MI')) AS counted_date, content_id, authors, to_char(modified_date, 'HH24:MI') AS modified_date, name from databreach_v WHERE telephone > 0 OR ssn > 0 AND  modified_date  BETWEEN NOW() - INTERVAL '7 DAYS' AND NOW() GROUP BY content_id, authors, modified_date, name ORDER BY modified_date DESC";
+async function currentActiveSessions() {
+  let query = "SELECT SUM(current) FROM (SELECT COUNT(to_char(session_date, 'HH24')) AS current FROM sessiont WHERE session_date  BETWEEN NOW() - INTERVAL '5 MINS' AND NOW() GROUP BY session_date) cnt";
+  if ( CurrentServer == null ) {
+    alert ("please connect to a server instance first. Try choosing one in your server list.");
+  } else {  
+    while ( RunActiveSessions ) { //we will run this every 5 mins
+      let serverMap = await getServerDetails();
+      let response = await callServer(serverMap.get("host"), serverMap.get("user"), serverMap.get("password"), query);
+      if ( !response.includes ("\n") ) {
+        document.getElementById('currentLoad').innerText = "Currently no data to display!";
+        return;
+      }
+      //All we want from the response is teh current number.
+      let results = response.split("\n");
+      //If we have a second [1] row that is our number
+      let current;
+      if ( results.length >= 1 ) {
+        current = parseInt(results[1]);//This will force a NaN if not correct
+      } 
+      if ( current == NaN || current == null ) {
+        current = 0;
+      }
+      document.getElementById('currentAccess').innerText = current;
+      await sleep ( 300000 );
+    }//end while
+  }
+}
+
+async function currentActiveUsers() {
+  let query = "SELECT COUNT(DISTINCT(user_id)) AS current FROM sessiont WHERE session_date  BETWEEN NOW() - INTERVAL '5 MINS' AND NOW()";
+  if ( CurrentServer == null ) {
+    alert ("please connect to a server instance first. Try choosing one in your server list.");
+  } else {  
+    while ( RunActiveSessions ) { //we will run this every 5 mins
+      let serverMap = await getServerDetails();
+      let response = await callServer(serverMap.get("host"), serverMap.get("user"), serverMap.get("password"), query);
+      if ( !response.includes ("\n") ) {
+        document.getElementById('currentLoad').innerText = "Currently no data to display!";
+        return;
+      }
+      //All we want from the response is teh current number.
+      let results = response.split("\n");
+      //If we have a second [1] row that is our number
+      let current;
+      if ( results.length >= 1 ) {
+        current = parseInt(results[1]);//This will force a NaN if not correct
+      } 
+      if ( current == NaN || current == null ) {
+        current = 0;
+      }
+      document.getElementById('totalUsers').innerText = current;
+      await sleep ( 300000 );
+    }//end while
+  }
+}
+
+async function mostActiveUsers() {
+  let query = "SELECT user_id, COUNT(DISTINCT(session_id)) as session FROM sessiont WHERE session_date  BETWEEN NOW() - INTERVAL '5 MINS' AND NOW() GROUP BY user_id";
   if ( CurrentServer == null ) {
     alert ("please connect to a server instance first. Try choosing one in your server list.");
   } else {  
@@ -271,8 +336,74 @@ async function getPIIBreaches() {
         document.getElementById('currentLoad').innerText = "Currently no data to display!";
         return;
       }
-      let graph_array = [];//The initial item in a pie must be string so here we sort to make sure that it is
-      graph_array.push(["Number", "Modified Date", "Author/s",  "ContentID", 'Name']);
+      let styleData = ".chart1{background: conic-gradient(";
+      let keyData = "<div><ul id='keys' class='key'>";
+      let records = response.split("\n");
+      let fieldNames = [];
+      let colors = [];
+      if (records.length > 0 ) {
+          fieldNames = records[0].split(",");
+          records.shift();//remove the field names;
+      }
+      let fieldValues = [];
+      let totalValues = 0;
+      records.forEach(async function(row) {
+          if ( row.includes(",") ){
+              fieldValues.push([row.split(",")]);
+          }
+      });
+      fieldValues.forEach(async function(value) {
+          totalValues = totalValues + parseInt(value[0][1]);
+          colors.push(genRanHex(6));
+      });    
+      
+      
+      let isFirst = true;
+      for ( let iter = 0; iter < colors.length; iter++ ) {
+          if ( iter == 0 ) {
+              let percentage = Math.round((parseInt(fieldValues[iter][0][1]) / totalValues) * 100)
+              styleData += "#" + colors[iter] + " " + percentage + "%";
+              keyData += "<li><strong class='percent' style='background: #" + colors[iter] + "; padding: 6px; color: #" + genRanHex(6) + ";'>" + percentage + "%</strong>";
+              keyData += "<span class='item'>" + fieldValues[iter][0][0] + "</span></li>"
+          } else {
+              let percentage = Math.round((parseInt(fieldValues[iter][0][1]) / totalValues) * 100)
+              styleData += ", #" + colors[iter] + " " + percentage + "%";
+              keyData += "<li><strong class='percent' style='background: #" + colors[iter] + "; padding: 6px; color: #" + genRanHex(6) + ";'>" + percentage + "%</strong>";
+              keyData += "<span class='item'>" + fieldValues[iter][0][0]  + "</span></li>";
+          } 
+      }
+      styleData += ", #" + genRanHex(6) + " 0%";
+      styleData += ");\n";
+      styleData += "border-radius: 50%;\n";
+      styleData += "width: 80%;\n";
+      styleData += "height: 80%;\n";
+      styleData += "padding-top: 20%;\n";
+      styleData += "float: left;\n";
+      styleData += "padding-right: 20px;\n}"; 
+      addStyle(styleData);
+      document.getElementById("mostActiveUsers").innerHTML = "<div class='chart1'></div>" ;
+      document.getElementById("keys").innerHTML = keyData + "</ul></div>";
+      await sleep ( 300000 );
+    }//end while
+  }
+}
+
+async function getGeoData() {
+  let query = "SELECT SUM(count), city, region, country FROM (SELECT COUNT(DISTINCT(session_id)) as count, city, region, country FROM sessiont WHERE session_date  BETWEEN NOW() - INTERVAL '5 MINS' AND NOW()  GROUP BY city, region, country)db GROUP BY city, region, country";
+  if ( CurrentServer == null ) {
+    alert ("please connect to a server instance first. Try choosing one in your server list.");
+  } else {  
+    while ( RunActiveSessions ) { //we will run this every 5 mins
+      let serverMap = await getServerDetails();
+      let response = await callServer(serverMap.get("host"), serverMap.get("user"), serverMap.get("password"), query);
+      if ( !response.includes (",") ) {
+        document.getElementById('currentLoad').innerText = "Currently no data to display!";
+        return;
+      }
+      var data  = new google.visualization.DataTable();
+      data.addColumn('string', 'Address');
+      data.addColumn('string', 'Location');
+      data.addColumn('string', 'Marker');
       const arrayData = response.split('\n');
       var records = [];
       let isFirst = true;
@@ -294,111 +425,35 @@ async function getPIIBreaches() {
                       cleanRow.push(iter);
               }
             }
-            //Now add these to the map
-            graph_array.push([cleanRow[0], cleanRow[3], cleanRow[2], cleanRow[1], cleanRow[4]]);
+            //Now add these to the data
+            data.addRow([cleanRow[1] + " " + cleanRow[2] + ", " + cleanRow[3], cleanRow[0] + ' Sessions', '#' + genRanHex(6)]);
       });
+      
+      //AIzaSyBmCgJIthkT7rifOQTsFGxObl3rBnQeLEI
+      var url = 'https://icons.iconarchive.com/icons/icons-land/vista-map-markers/48/';
       var options = {
-        title: "PII Breaches by time, Author and Content ID",
-        curveType: 'function',
-        height: "450",
-        isStacked: true,
-        legend: { 
-            position: 'bottom',
-            textStyle: {color: '#f6f6f6', fontSize: 11}
-        },
-        series: {
-            0: { color: '#ff6e2e' }
-        },        
-        backgroundColor: {
-            fill: '#003d52',
-            fillOpacity: 0.8
-        }, 
-        hAxis: {
-            textStyle: {
-              fontName: 'Source Sans Pro',
-              fontSize: 10,
-              bold: false,
-              italic: false,
-              // The color of the text.
-              color: '#f6f6f6',
-              // The transparency of the text.
-              opacity: 0.8
-            }
+        zoomLevel: 6,
+        showTooltip: true,
+        showInfoWindow: true,
+        useMapTypeControl: true,
+        icons: {
+          blue: {
+            normal:   url + 'Map-Marker-Ball-Azure-icon.png',
+            selected: url + 'Map-Marker-Ball-Right-Azure-icon.png'
           },
-          vAxis: {
-            textStyle: {
-              fontName: 'Source Sans Pro',
-              fontSize: 10,
-              bold: false,
-              italic: false,
-              // The color of the text.
-              color: '#f6f6f6',
-              // The transparency of the text.
-              opacity: 0.8
-            }
-          }               
-      };
-      var data = google.visualization.arrayToDataTable(graph_array);
-      var chart = new google.charts.Bar(document.getElementById('PiiData'));
-      chart.draw(data, google.charts.Bar.convertOptions(options));
-      await sleep ( 300000 );
-    }
-  }
-}
-
-async function getSentiment() {
-  let query = "SELECT SUM(angry) as angry, SUM(apprehensive) as apprehensive, SUM(disapointed) as disappointed, SUM(happy) as happy, SUM(humiliated) as humiliated,SUM(upset) as upset, SUM(worried) as worried, SUM (not_classified) as not_classified FROM emotions_v, full_index_meta where emotions_v.content_id = full_index_meta.content_id  AND created_date BETWEEN NOW() - INTERVAL '1 MONTH' AND NOW()";
-  if ( CurrentServer != null ) {
-    while ( RunActiveSessions ) { //we will run this every 5 mins
-      let serverMap = await getServerDetails();
-      let response = await callServer(serverMap.get("host"), serverMap.get("user"), serverMap.get("password"), query);
-      if ( !response.includes (",") ) {
-        document.getElementById('currentLoad').innerText = "Currently no data to display!";
-        return;
-      }
-      const arrayData = response.split('\n');
-      var clean_array = [];//no nulls
-      //Make sure that we have no null rows here
-      for ( var data_check of arrayData ) {
-          if ( data_check[0] != null ) {
-              clean_array.push(data_check);
+          green: {
+            normal:   url + 'Map-Marker-Push-Pin-1-Chartreuse-icon.png',
+            selected: url + 'Map-Marker-Push-Pin-1-Right-Chartreuse-icon.png'
+          },
+          pink: {
+            normal:   url + 'Map-Marker-Ball-Pink-icon.png',
+            selected: url + 'Map-Marker-Ball-Right-Pink-icon.png'
           }
-      }
-      //Now we will place this into a pairngs map
-      var records = new Map();
-      var totalCount = 0;
-      var recordCount = clean_array.length -1;
-      var fieldNames = clean_array[0].split(",");
-      var fieldValues = clean_array[1].split(",");
-      for ( let iter = 0; iter < fieldNames.length; iter++ ) {
-        if ( fieldValues[iter] != null ) {
-          records.set(fieldNames[iter], fieldValues[iter]);
         }
-      }
-      var gauge_options = {
-        height: 200,
-        yellowFrom:35, yellowTo: 55,
-        minorTicks: 5,
-        max: 100
-    };
-    var gauge_array = [];
-    gauge_array.push(['Emotion', 'Percentage']);
-    records.forEach((value,key) => {
-      totalCount = totalCount + parseInt(value);
-    });
-    records.forEach((value,key) => {
-      if ( parseInt(value) > 0 ) {
-        if ( key != undefined ){
-          let percentage = (parseInt(value)/totalCount) * 100;
-          gauge_array.push([key, parseInt(percentage)]);
-        }
-      }
-      totalCount + parseInt(value);
-    });
-      let created_data = new google.visualization.arrayToDataTable(gauge_array);
-      var gauge_chart = new google.visualization.Gauge(document.getElementById('sentimentData'));
-      gauge_chart.draw(created_data, gauge_options);
+      };
+      var map = new google.visualization.Map(document.getElementById('geoData'));
+      map.draw(data, options);
       await sleep ( 300000 );
-    } 
-  }
+    }//end while Loop
+  }  
 }

@@ -28,14 +28,60 @@
     align-items: center;
 }
 
-#PiiData {
-    min-width: 100%;
+#secondRow {
+    min-width: 98%;
     height: 40%;
+    display: flex;
+    flex-flow: row;
     border-top: 5px solid #007396;
     background-color: #003d52;
-    overflow: auto;
+    align-items: flex-start;
+    color: white;
     align-content: center;
-    align-items: center;
+    justify-content: space-between;
+}
+
+#secondRow .column {
+    height: 95%;
+    width: 30%;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.secondrowheading {
+    font-weight: 900;
+    font-size: 1rem;
+    padding: 25px;
+}
+
+.secondrowheading div {
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    padding: 15px;
+}
+
+#currentAccess {
+    text-align: center;
+    margin-top: 35%;
+    font-size: 2.5rem;
+}
+
+#keys .item {
+    margin-left: 5px;
+}
+
+#thirdRow {
+    min-width: 98%;
+    height: 40%;
+    display: flex;
+    flex-flow: column;
+    border-top: 5px solid #007396;
+    background-color: #003d52;
+    align-items: flex-start;
+    color: white;
+    align-content: center;
+    justify-content: space-between;
 }
 
 #dashboard {
