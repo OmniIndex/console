@@ -31,7 +31,7 @@ google.charts.load('current', {'packages':['gauge']});
 google.charts.load('current', {'packages':['timeline']});
 google.charts.load('current', {'packages':['bar']});
 google.charts.load('current', {'packages':['corechart']});
-google.charts.load('current', {'packages':['map'], 'mapsApiKey': 'AIzaSyCbrVb7DJ8BCEiQE4KKm28JM3F0m15ryjA'});
+google.charts.load('current', {'packages':['map'], 'mapsApiKey': ''});
 
 function addStyle(styleString) {
   const style = document.createElement('style');
